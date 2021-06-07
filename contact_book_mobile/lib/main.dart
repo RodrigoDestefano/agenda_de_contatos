@@ -1,4 +1,5 @@
-import 'package:contact_book_mobile/views/login_screen.dart';
+import 'package:contact_book_mobile/views/contacts_book_view/page/contacts_book.dart';
+import 'package:contact_book_mobile/views/login_screen_view/page/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Agenda de Contatos',
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/second': (context) => ContactsBook(),
+      },
     );
   }
 }

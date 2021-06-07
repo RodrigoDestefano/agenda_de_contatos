@@ -24,7 +24,7 @@ class PasswordTextFormFieldState extends State<PasswordTextFormField> {
         decoration: InputDecoration(
           filled: true,
           prefixIcon: Icon(
-            Icons.ac_unit,
+            Icons.no_encryption,
             size: 20.0,
             color: Colors.black45,
           ),
@@ -48,7 +48,7 @@ class PasswordTextFormFieldState extends State<PasswordTextFormField> {
             borderRadius: BorderRadius.circular(50.0),
           ),
           contentPadding: EdgeInsets.only(top: 5.0, left: 15.0),
-          hintText: "Enter with your password",
+          hintText: "Password",
         ),
         obscureText: !_hidePassword,
         obscuringCharacter: "*",

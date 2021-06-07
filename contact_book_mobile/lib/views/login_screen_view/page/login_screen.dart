@@ -1,5 +1,5 @@
-import 'package:contact_book_mobile/widgets/username_text_form_field.dart';
-import 'package:contact_book_mobile/widgets/password_text_form_fiel.dart';
+import 'package:contact_book_mobile/views/login_screen_view/widgets/username_text_form_field.dart';
+import 'package:contact_book_mobile/views/login_screen_view/widgets/password_text_form_fiel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,9 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 width: 250.0,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/second');
+                  },
                   icon: Icon(Icons.access_alarm_sharp),
-                  label: Text("Sign in with Google"),
+                  label: Text("Sign in"),
                 ),
               ),
             ),
@@ -50,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(primary: Colors.red),
                 icon: Icon(Icons.access_alarm_sharp),
-                label: Text("Sign in with Google"),
+                label: Text("Sign in using Google"),
               ),
             ),
           ],
