@@ -4,84 +4,137 @@ const Contact = require('../models/Contact');
 module.exports = {
   //############## GET ##############
   async getContact(req, res) {
-    const {user_id} = req.params;
+    const {contact_id} = req.params;
 
-    const user = await User.findByPk(user_id, {include: {association: 'contact'}});
+    try {   
+      const contact = await Contact.findByPk(contact_id);
 
-    if (!user)
-      return res.status(400).send({status: false, message: 'User not found!'});
+      if (!contact)
+        return res.status(400).send({status: false, message: 'Contact not found!'});
 
-    return res.status(200).send(user);
+      return res.status(200).send(contact);
+    
+    } catch (e) {
+      return res.status(400).json({
+        status: false,  
+        message: 'Error getting contact!',
+        error: e
+      });
+    }
   },
 
-  async getAllContacts(req, res) {
+  async getAllContactsByUserId(req, res) {
     const {user_id} = req.params;
 
-    const user = await User.findByPk(user_id, {include: {association: 'contact'}});
+    try {
+      const user = await User.findByPk(user_id, {include: {association: 'contact'}});
 
-    if (!user)
-      return res.status(400).send({status: false, message: 'User not found!'});
+      if (!user)
+        return res.status(400).send({status: false, message: 'User not found!'});
 
-    return res.status(200).send(user);
+      // Dont show the password in the response
+      user.password = undefined
+
+      return res.status(200).send(user);
+    
+    } catch (e) {
+      return res.status(400).json({
+        status: false,  
+        message: 'Error getting all contacts!',
+        error: e
+      });
+    }
   },
 
   //############## POST ##############
   async createContact(req, res) {
+    const {user_id} = req.params;
+    const {name, phone, email, zip_code, street, number, district, city} = req.body;
+    
     try {
-      const {user_id} = req.params;
-      const {name} = req.body;
       const user = await User.findByPk(user_id);
+      const named_contact = await User.findOne({where: {name, id: user_id}});
       
       if (!user)
-        return res.status(400).json({status: 0, message: 'User not found!'});
+        return res.status(400).json({status: false, message: 'User not found!'});
+      
+      // Unique verification
+      if(named_contact)
+        return res.status(400).send({status: false, message: "Contact name already registered!"});
   
-      const contact = await Contact.create({name, user_id,});
+      const contact = await Contact.create({
+        name,
+        phone,
+        email,
+        zip_code,
+        street,
+        number,
+        district,
+        city,
+        user_id,
+        });
 
       return res.status(200).json({
         status: true,
         message: "Contact registered successfully!",
         contact
       });
-    } 
-    catch (e) {
-      return res.status(400).json({error: e});
+
+    } catch (e) {
+      return res.status(400).json({
+        status: false,  
+        message: 'Error creating contact!',
+        error: e
+      });
     }
   },
 
   //############## PUT ##############
   async updateContact(req, res) {
-    const id = req.params.contact_id;
-    const {name} = req.body;
+    const {contact_id} = req.params;
+    const {name, phone, email, zip_code, street, number, district, city} = req.body;
 
     try {
-      const contact = await Contact.findByPk(id);
+      const contact = await Contact.findByPk(contact_id);
 
       if (contact) {
-        await Contact.update({name}, {where: {id}});
+        await Contact.update({
+          name,
+          phone,
+          email,
+          zip_code,
+          street,
+          number,
+          district,
+          city
+        }, {where: {id: contact_id}});
 
         return res.status(200).json({
           status: true,
           message: "Contact successfully updated!",
         });
-
       } else {
         return res.status(400).json({status: false, message: 'Contact not found!'});
       }
 
     } catch (e) {
-      return res.status(400).json({status: false, message: 'Error updating contact!'});
+      return res.status(400).json({
+        status: false,  
+        message: 'Error updating contact!',
+        error: e
+      });
     }
   },
 
   //############## DELETE ##############
   async deleteContact(req, res) {
-    const id = req.params.contact_id;
+    const {contact_id} = req.params;
 
     try {
-      const contact = await Contact.findByPk(id);
+      const contact = await Contact.findByPk(contact_id);
 
       if (contact) {
-        await Contact.destroy({where: {id}});
+        await Contact.destroy({where: {id: contact_id}});
 
         return res.status(200).json({
           status: true,
@@ -96,7 +149,11 @@ module.exports = {
       }
 
     } catch (e) {
-      return res.status(400).json({error: e});
+      return res.status(400).json({
+        status: false,  
+        message: 'Error deleting contact!',
+        error: e
+      });
     }
   }
 };

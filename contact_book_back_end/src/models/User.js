@@ -17,9 +17,12 @@ class User extends Model {
     })
   }
 
-  // DB Relationship: (User) 1 : N (Contacts)
+  // DB Relationship:
   static associate(models) {
+    // (User) 1 : N (Contacts)
     this.hasMany(models.Contact, {foreignKey: 'user_id', as: 'contact'});
+    // (User) 1 : N (Groups)
+    this.hasMany(models.Group, {foreignKey: 'user_id', as: 'group'});
   }
 }
 

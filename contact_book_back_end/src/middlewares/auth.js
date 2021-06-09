@@ -4,10 +4,10 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth.json');
 
 module.exports = (req, res, next) => {
-  // Two parts Token: Bearer + hash, plit by one space
-  const authHeader = req.headers['access-token'] || req.headers['Access-Token'] || req.headers.Authorization;
+  // Two parts Token: Bearer + hash, splited by one space
+  const authHeader = req.headers.authorization;
 
-  // This conditionals return the errors in case of no authentication
+  // This conditionals returns some specific errors in case of no authentication
   if (!authHeader)
     return res.status(401).send({error: 'No token provider'});
   
@@ -21,12 +21,11 @@ module.exports = (req, res, next) => {
   if (!/^Bearer$/i.test(scheme))
     return res.status(401).send({error: 'Token malFormatted'});
   
-  jwt.verify(token, authConfig.secret, (err, decoded) => {
-    if (err) return res.status(401).send({error: 'Token invalid'});
+  jwt.verify(token, authConfig.secret, (e, decoded) => {
+    if (e) return res.status(401).send({error: 'Token invalid'});
 
     req.user_id = decoded.id;
-    console.log(decoded.id)
-
+    
     return next();
   });
 };
