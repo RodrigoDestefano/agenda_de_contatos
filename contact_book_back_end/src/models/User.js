@@ -9,6 +9,7 @@ class User extends Model {
       email: DataTypes.STRING,
     }, {
       sequelize,
+      // Password encryption
       hooks: {beforeCreate: (user) => {
         const salt = bcrypt.genSaltSync();
         user.password = bcrypt.hashSync(user.password, salt);
@@ -16,6 +17,7 @@ class User extends Model {
     })
   }
 
+  // DB Relationship: (User) 1 : N (Contacts)
   static associate(models) {
     this.hasMany(models.Contact, {foreignKey: 'user_id', as: 'contact'});
   }

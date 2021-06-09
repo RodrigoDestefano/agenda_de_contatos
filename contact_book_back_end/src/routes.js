@@ -7,17 +7,20 @@ const authMiddleware = require('./middlewares/auth');
 
 const router = express.Router();
 
-router.get('/users', UserController.index);
-router.post('/users', UserController.store);
-router.put('/users/:user_id', UserController.update);
-router.delete('/users/:user_id', UserController.delete);
+// USERS routes services
 router.post('/users/login', UserController.login);
+router.get('/users', UserController.getAllUsers);
+router.post('/users', UserController.createUser);
+router.put('/users/:user_id', UserController.updateUser);
+router.delete('/users/:user_id', UserController.deleteUser);
 
+// After this, all routes needs authentication 
 router.use(authMiddleware);
 
-router.get('/users/:user_id/contacts', ContactController.index);
-router.post('/users/:user_id/contacts', ContactController.store);
-router.put('/users/:user_id/contacts/:contact_id', ContactController.update);
-router.delete('/users/:user_id/contacts/:contact_id', ContactController.delete);
+// CONTACTS routes services
+router.get('/users/:user_id/contacts', ContactController.getAllContacts);
+router.post('/users/:user_id/contacts', ContactController.createContact);
+router.put('/users/contacts/:contact_id', ContactController.updateContact);
+router.delete('/users/contacts/:contact_id', ContactController.deleteContact);
 
 module.exports = router;
