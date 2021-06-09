@@ -1,7 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const authConfig = require('../config/auth')
+const authConfig = require('../config/auth');
+
+const { sendEmail } = require('../helpers/email/send_email');
 
 function generateToken(params = {}) {
   return jwt.sign(params, authConfig.secret, {
@@ -109,6 +111,9 @@ module.exports = {
         return res.status(400).send({status: false, message: "E-mail already registered!"});
 
       const user = await User.create({name, password, email});
+      
+      // After creating the user, the email is sent
+      sendEmail(user.email, user.name);
 
       // Dont show the password in the response
       user.password = undefined
