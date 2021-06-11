@@ -2,7 +2,7 @@ import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/contact_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/views/contact_profile/page/contact_profile.dart';
-import 'package:contact_book_mobile/views/contacts_book_view/page/home_page.dart';
+import 'package:contact_book_mobile/views/home_view/page/home_page.dart';
 import 'package:contact_book_mobile/views/login_view/page/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,4 +1,5 @@
-import 'package:contact_book_mobile/views/contacts_book_view/widgets/contacts_tab.dart';
+import 'package:contact_book_mobile/views/home_view/widgets/contacts_tab.dart';
+import 'package:contact_book_mobile/views/home_view/widgets/custom_fab.dart';
 import 'package:flutter/material.dart';
 
 // This file contains the entire page and call your widgets
@@ -34,11 +35,7 @@ class _HomePageState extends State<HomePage> {
           body: TabBarView(
             children: [ContactsTab(), Icon(Icons.directions_transit)],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              setState(() {});
-            },
-          ),
+          floatingActionButton: CustomFab(),
         ),
       ),
     );
