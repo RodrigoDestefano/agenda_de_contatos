@@ -1,6 +1,11 @@
-import 'package:contact_book_mobile/views/contacts_book_view/page/contacts_book.dart';
-import 'package:contact_book_mobile/views/login_screen_view/page/login_screen.dart';
+import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
+import 'package:contact_book_mobile/core/controllers/contact_controller.dart';
+import 'package:contact_book_mobile/core/controllers/user_controller.dart';
+import 'package:contact_book_mobile/views/contact_profile/page/contact_profile.dart';
+import 'package:contact_book_mobile/views/contacts_book_view/page/home_page.dart';
+import 'package:contact_book_mobile/views/login_view/page/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,14 +14,23 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Agenda de Contatos',
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginScreen(),
-        '/second': (context) => ContactsBook(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthController()),
+        ChangeNotifierProvider(create: (_) => UserController()),
+        ChangeNotifierProvider(create: (_) => ContactController()),
+      ],
+      child: MaterialApp(
+        title: 'Agenda de Contatos',
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        // All routes of the app
+        routes: {
+          '/': (context) => LoginScreen(),
+          '/second': (context) => HomePage(),
+          '/third': (context) => ContactProfile(),
+        },
+      ),
     );
   }
 }

@@ -1,21 +1,20 @@
 import 'package:contact_book_mobile/views/contacts_book_view/widgets/contacts_tab.dart';
 import 'package:flutter/material.dart';
 
-class ContactsBook extends StatefulWidget {
-  const ContactsBook({Key? key}) : super(key: key);
+// This file contains the entire page and call your widgets
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
 
   @override
-  _ContactsBookState createState() => _ContactsBookState();
+  _HomePageState createState() => _HomePageState();
 }
 
-List<String> list = ["Joao", "MAaria", "Beala", "Rafa", "rahcle"];
-
-class _ContactsBookState extends State<ContactsBook> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Material(
       child: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(80.0),
@@ -27,18 +26,18 @@ class _ContactsBookState extends State<ContactsBook> {
                 indicatorColor: Color(0xff04559d),
                 tabs: [
                   Tab(icon: Icon(Icons.directions_car)),
-                  Tab(icon: Icon(Icons.directions_transit)),
-                  Tab(icon: Icon(Icons.directions_bike)),
+                  Tab(icon: Icon(Icons.directions_transit))
                 ],
               ),
             ),
           ),
           body: TabBarView(
-            children: [
-              ContactsTab(list),
-              Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-            ],
+            children: [ContactsTab(), Icon(Icons.directions_transit)],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              setState(() {});
+            },
           ),
         ),
       ),

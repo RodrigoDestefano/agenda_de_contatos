@@ -1,17 +1,29 @@
-import 'package:contact_book_mobile/views/contacts_book_view/page/contacts_book.dart';
+import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
+import 'package:contact_book_mobile/core/controllers/contact_controller.dart';
+import 'package:contact_book_mobile/core/services/contact_services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+// This file is a specific widget from HomePage
 class ContactsTab extends StatefulWidget {
-  final List<String> list;
-  const ContactsTab(this.list);
+  ContactsTab({Key? key}) : super(key: key);
 
   @override
   _ContactsTabState createState() => _ContactsTabState();
 }
 
 class _ContactsTabState extends State<ContactsTab> {
+  String token = '';
   TextEditingController searchInputController = TextEditingController();
-  var foudContacts;
+
+  @override
+  void initState() {
+    super.initState();
+    // AuthController is used to get the Token
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      token = context.read<AuthController>().token;
+    });
+  }
 
   @override
   void dispose() {
@@ -40,7 +52,7 @@ class _ContactsTabState extends State<ContactsTab> {
                     setState(() {
                       if (!isControllerEmpty()) {
                         searchInputController.clear();
-                        foudContacts = list;
+                        // foudContacts = userContacts;
                       }
                     });
                   },
@@ -65,22 +77,40 @@ class _ContactsTabState extends State<ContactsTab> {
               )),
         ),
       ),
-      body: ListView.builder(
-        itemCount:
-            isControllerEmpty() ? list.length : foudContacts.toList().length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.amber,
-              radius: 30.0,
-              child: Text("$index", style: TextStyle(fontSize: 35.0)),
-            ),
-            title: Text(isControllerEmpty()
-                ? "${list[index]}"
-                : "${foudContacts.toList()[index]}"),
-            subtitle: Text("Subtitle"),
-          );
-        },
+      body: Container(
+        color: Color(0xff181818),
+        child: FutureBuilder(
+            future: ContactServices().getContactsByUserId(1, token),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.amber,
+                        radius: 30.0,
+                        child: Text("$index", style: TextStyle(fontSize: 35.0)),
+                      ),
+                      title: Text(
+                          isControllerEmpty()
+                              ? "${snapshot.data[index].name}"
+                              : "${snapshot.data[index].name}",
+                          style: TextStyle(color: Colors.white)),
+                      subtitle: Text("Subtitle",
+                          style: TextStyle(color: Colors.white)),
+                      onTap: () => {
+                        Provider.of<ContactController>(context, listen: false)
+                            .addContact(snapshot.data[index]),
+                        Navigator.pushNamed(context, '/third')
+                      },
+                    );
+                  },
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
       ),
     );
   }
@@ -88,9 +118,11 @@ class _ContactsTabState extends State<ContactsTab> {
   void onSearchTextChanged(String text) async {
     setState(() {
       print(searchInputController.text);
-      foudContacts = list.where((element) =>
-          element.toLowerCase().contains(searchInputController.text));
-      print(foudContacts.toList());
+
+      // var foudContacts = userContacts.where((element) =>
+      //     element.name.toLowerCase().contains(searchInputController.text));
+
+      // print(foudContacts);
     });
   }
 
