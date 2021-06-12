@@ -49,7 +49,7 @@ module.exports = {
   //############## POST ##############
   async createContact(req, res) {
     const {user_id} = req.params;
-    const {name, phone, email, zip_code, street, number, district, city} = req.body;
+    const {name, phone, email, zip_code, street, number, district, city, uf} = req.body;
     
     try {
       const user = await User.findByPk(user_id);
@@ -71,6 +71,7 @@ module.exports = {
         number,
         district,
         city,
+        uf,
         user_id,
         });
 
@@ -92,7 +93,7 @@ module.exports = {
   //############## PUT ##############
   async updateContact(req, res) {
     const {contact_id} = req.params;
-    const {name, phone, email, zip_code, street, number, district, city} = req.body;
+    const {name, phone, email, zip_code, street, number, district, city, uf} = req.body;
 
     try {
       const contact = await Contact.findByPk(contact_id);
@@ -106,7 +107,8 @@ module.exports = {
           street,
           number,
           district,
-          city
+          city,
+          uf
         }, {where: {id: contact_id}});
 
         return res.status(200).json({

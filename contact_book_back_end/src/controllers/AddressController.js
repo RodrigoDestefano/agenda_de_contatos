@@ -62,6 +62,7 @@ module.exports = {
         number,
         district,
         city,
+        uf,
         contact_id,
       });
 
@@ -96,7 +97,8 @@ module.exports = {
           street, 
           number, 
           district, 
-          city
+          city,
+          uf
         }, {where: {id: address_id}});
 
         return res.status(200).json({
