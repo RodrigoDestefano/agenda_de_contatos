@@ -38,6 +38,7 @@ router.delete('/address/:address_id', AddressController.deleteAddress);
 
 // GROUP routes services
 router.get('/groups/:group_id', GroupController.getGroup);
+router.get('/users/:user_id/groups', GroupController.getAllGroupsByUserId);
 router.post('/users/:user_id/groups', GroupController.createGroup);
 router.post('/contacts/:contact_id/groups', GroupController.addContactToGroup);
 router.delete('/contacts/:contact_id/groups', GroupController.deleteContactFromGroup);

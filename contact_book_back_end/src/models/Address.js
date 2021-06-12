@@ -10,6 +10,7 @@ class Address extends Model {
       number: DataTypes.STRING,
       district: DataTypes.STRING,
       city: DataTypes.STRING,
+      uf: DataTypes.STRING,
     }, {sequelize})
   }
 

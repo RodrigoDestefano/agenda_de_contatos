@@ -29,6 +29,29 @@ module.exports = {
     }
   },
 
+  async getAllGroupsByUserId(req, res) {
+    const {user_id} = req.params;
+
+    try {
+      const user = await User.findByPk(user_id, {include: {association: 'group'}});
+
+      if (!user)
+        return res.status(400).send({status: false, message: 'User not found!'});
+
+      // Dont show the password in the response
+      user.password = undefined
+
+      return res.status(200).send(user);
+    
+    } catch (e) {
+      return res.status(400).json({
+        status: false,  
+        message: 'Error getting all groups!',
+        error: e
+      });
+    }
+  },
+
   //############## POST ##############
   async createGroup(req, res) {
     const {user_id} = req.params;
