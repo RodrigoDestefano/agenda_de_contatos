@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => Login(),
           '/second': (context) => Home(),
-          '/third': (context) => AddObjectView(),
+          AddObjectView.routeName: (context) => AddObjectView(),
           '/fourth': (context) => ContactView(),
         },
       ),

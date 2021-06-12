@@ -46,7 +46,7 @@ module.exports = {
   //############## POST ##############
   async createAddress(req, res) {
     const {contact_id} = req.params;
-    const {phone, email, zip_code, street, number, district, city} = req.body;
+    const {phone, email, zip_code, street, number, district, city, uf} = req.body;
     
     try { 
       const contact = await Contact.findByPk(contact_id);
@@ -84,7 +84,7 @@ module.exports = {
   //############## PUT ##############
   async updateAddress(req, res) {
     const {address_id} = req.params;
-    const {phone, email, zip_code, street, number, district, city} = req.body;
+    const {phone, email, zip_code, street, number, district, city, uf} = req.body;
 
     try {
       const address = await Address.findByPk(address_id);

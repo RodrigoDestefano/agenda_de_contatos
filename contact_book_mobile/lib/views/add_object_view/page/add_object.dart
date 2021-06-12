@@ -1,5 +1,6 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
+import 'package:contact_book_mobile/core/models/helpers/screen_arguments.dart';
 import 'package:contact_book_mobile/core/services/api_correios_services.dart';
 import 'package:contact_book_mobile/views/add_object_view/data/add_object_services.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: must_be_immutable
 class AddObjectView extends StatefulWidget {
+  static const routeName = '/third';
+
   @override
   _AddObjectViewState createState() => _AddObjectViewState();
 }
@@ -58,10 +61,12 @@ class _AddObjectViewState extends State<AddObjectView> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Adicionar',
+          args.isAddingContact ? 'Add Contact' : 'Add Address',
           textAlign: TextAlign.end,
           style: TextStyle(fontSize: 16.0),
         ),
@@ -74,16 +79,18 @@ class _AddObjectViewState extends State<AddObjectView> {
             key: formKey,
             child: Column(
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 40.0,
-                    child: TextFormField(
-                        decoration: getInputDecoration('Name'),
-                        validator: (value) {
-                          if (value!.isEmpty) return 'Enter with some name';
-                        },
-                        onSaved: (value) => setState(() => name = value!),
-                        style: TextStyle(color: Colors.white))),
+                args.isAddingContact
+                    ? Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: 40.0,
+                        child: TextFormField(
+                            decoration: getInputDecoration('Name'),
+                            validator: (value) {
+                              if (value!.isEmpty) return 'Enter with some name';
+                            },
+                            onSaved: (value) => setState(() => name = value!),
+                            style: TextStyle(color: Colors.white)))
+                    : Container(),
                 Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 40.0,
@@ -280,8 +287,13 @@ class _AddObjectViewState extends State<AddObjectView> {
                         String token = AuthController.instance.token;
 
                         try {
-                          resp = await AddObjectServices()
-                              .createContact(userId, token, body);
+                          if (args.isAddingContact) {
+                            resp = await AddObjectServices()
+                                .createContact(userId, token, body);
+                          } else {
+                            resp = await AddObjectServices()
+                                .createAddress(args.contactId, token, body);
+                          }
 
                           Fluttertoast.showToast(
                               msg: resp['message'],
@@ -299,7 +311,7 @@ class _AddObjectViewState extends State<AddObjectView> {
                         }
                       }
                     },
-                    child: Text('Create Contact!'),
+                    child: Text('Create'),
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xff3fa1ff),
                         padding: EdgeInsets.symmetric(

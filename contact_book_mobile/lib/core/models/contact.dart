@@ -20,6 +20,7 @@ class Contact {
       this.number,
       this.district,
       this.city,
+      this.uf,
       this.createdAt,
       this.updatedAt,
       this.userId,
@@ -35,6 +36,7 @@ class Contact {
   String? number;
   String? district;
   String? city;
+  String? uf;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -57,6 +59,7 @@ class Contact {
         number: json["number"] == null ? null : json["number"],
         district: json["district"] == null ? null : json["district"],
         city: json["city"] == null ? null : json["city"],
+        uf: json["uf"] == null ? null : json["uf"],
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -82,6 +85,7 @@ class Contact {
         "number": number == null ? null : number,
         "district": district == null ? null : district,
         "city": city == null ? null : city,
+        "uf": uf == null ? null : uf,
         "createdAt": createdAt == null ? null : createdAt?.toIso8601String(),
         "updatedAt": updatedAt == null ? null : updatedAt?.toIso8601String(),
         "user_id": userId == null ? null : userId,

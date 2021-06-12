@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:contact_book_mobile/core/models/helpers/screen_arguments.dart';
+import 'package:contact_book_mobile/views/add_object_view/page/add_object.dart';
 import 'package:contact_book_mobile/views/home_view/widgets/add_group_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -111,7 +113,11 @@ class _CustomFabState extends State<CustomFab>
                       size: 27.0,
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/third');
+                      ScreenArguments args =
+                          ScreenArguments(contactId: 0, isAddingContact: true);
+
+                      Navigator.of(context)
+                          .pushNamed(AddObjectView.routeName, arguments: args);
                     },
                   ),
                 ),
