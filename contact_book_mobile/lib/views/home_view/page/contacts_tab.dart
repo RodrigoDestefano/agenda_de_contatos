@@ -108,7 +108,7 @@ class _ContactsTabState extends State<ContactsTab> {
                       onTap: () => {
                         ContactController.instance
                             .addContact(snapshot.data[index]),
-                        Navigator.pushNamed(context, '/third')
+                        Navigator.pushNamed(context, '/fourth')
                       },
                     );
                   },

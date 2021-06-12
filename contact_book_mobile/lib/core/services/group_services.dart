@@ -10,7 +10,7 @@ class GroupServices {
   Future<List<Group>> getGroupsByUserId(int? userId, String? token) async {
     List<Group> groups = [];
 
-    var url = Uri.parse(('$path/users/$userId/group'));
+    var url = Uri.parse(('$path/users/$userId/groups'));
     print(url);
 
     var response =
@@ -20,7 +20,7 @@ class GroupServices {
         convert.jsonDecode(response.body) as Map<String, dynamic>;
 
     if (response.statusCode == 200) {
-      var decode = json.decode(utf8.decode(response.bodyBytes))['contact']
+      var decode = json.decode(utf8.decode(response.bodyBytes))['group']
           as List<dynamic>;
 
       for (var contact in decode) {

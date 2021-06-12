@@ -1,7 +1,8 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/contact_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
-import 'package:contact_book_mobile/views/contact_profile/page/contact_profile.dart';
+import 'package:contact_book_mobile/views/add_object_view/page/add_object.dart';
+import 'package:contact_book_mobile/views/contact_view/page/contact_view.dart';
 import 'package:contact_book_mobile/views/home_view/page/home_page.dart';
 import 'package:contact_book_mobile/views/login_view/page/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,10 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         // All routes of the app
         routes: {
-          '/': (context) => LoginScreen(),
-          '/second': (context) => HomePage(),
-          '/third': (context) => ContactProfile(),
+          '/': (context) => Login(),
+          '/second': (context) => Home(),
+          '/third': (context) => AddObjectView(),
+          '/fourth': (context) => ContactView(),
         },
       ),
     );

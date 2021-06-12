@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 // This file contains the entire page and call your widgets
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginState createState() => _LoginState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> onLoginSubmit(String email, String password) async {
     try {
       // Login service is called
-      var resp = await LoginScreenServices().login(email, password);
+      var resp = await LoginServices().login(email, password);
 
       if (resp['status']) {
         User user = User.fromJson(resp['user']);
