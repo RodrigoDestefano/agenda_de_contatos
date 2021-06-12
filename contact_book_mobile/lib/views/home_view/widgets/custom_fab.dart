@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:contact_book_mobile/views/home_view/widgets/add_group_widget.dart';
 import 'package:flutter/material.dart';
 
 class CustomFab extends StatefulWidget {
@@ -65,18 +66,21 @@ class _CustomFabState extends State<CustomFab>
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(40.0),
                   child: IconButton(
-                    splashColor: Colors.black54,
-                    splashRadius: 31.0,
-                    tooltip: "Add a new group",
-                    icon: Icon(
-                      Icons.group_add,
-                      color: Colors.white,
-                      size: 27.0,
-                    ),
-                    onPressed: () {
-                      setState(() {});
-                    },
-                  ),
+                      splashColor: Colors.black54,
+                      splashRadius: 31.0,
+                      tooltip: "Add a new group",
+                      icon: Icon(
+                        Icons.group_add,
+                        color: Colors.white,
+                        size: 27.0,
+                      ),
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AddGroupWidget();
+                            });
+                      }),
                 ),
               ),
             ),

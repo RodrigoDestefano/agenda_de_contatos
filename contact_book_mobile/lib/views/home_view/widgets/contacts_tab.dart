@@ -3,7 +3,6 @@ import 'package:contact_book_mobile/core/controllers/contact_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/core/services/contact_services.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // This file is a specific widget from HomePage
 // ignore: must_be_immutable
@@ -78,47 +77,48 @@ class _ContactsTabState extends State<ContactsTab> {
       body: Container(
         color: Color(0xff181818),
         child: FutureBuilder(
-            future: ContactServices().getContactsByUserId(
-                UserController.instance.user.id, AuthController.instance.token),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    setState(() {});
-                  },
-                  child: ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        leading: Container(
-                          width: 40.0,
-                          height: 40.0,
-                          // Catch image from https://picsum.photos/
-                          child: ClipOval(
-                            child: Image.network(
-                                'https://picsum.photos/id/${snapshot.data[index].id}/200'),
-                          ),
+          future: ContactServices().getContactsByUserId(
+              UserController.instance.user.id, AuthController.instance.token),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  setState(() {});
+                },
+                child: ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: Container(
+                        width: 40.0,
+                        height: 40.0,
+                        // Catch image from https://picsum.photos/
+                        child: ClipOval(
+                          child: Image.network(
+                              'https://picsum.photos/id/${snapshot.data[index].id}/200'),
                         ),
-                        title: Text(
-                            isControllerEmpty()
-                                ? "${snapshot.data[index].name}"
-                                : "${snapshot.data[index].name}",
-                            style: TextStyle(color: Colors.white)),
-                        subtitle: Text("${snapshot.data[index].phone}",
-                            style: TextStyle(color: Colors.white)),
-                        onTap: () => {
-                          Provider.of<ContactController>(context, listen: false)
-                              .addContact(snapshot.data[index]),
-                          Navigator.pushNamed(context, '/third')
-                        },
-                      );
-                    },
-                  ),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }),
+                      ),
+                      title: Text(
+                          isControllerEmpty()
+                              ? "${snapshot.data[index].name}"
+                              : "${snapshot.data[index].name}",
+                          style: TextStyle(color: Colors.white)),
+                      subtitle: Text("${snapshot.data[index].phone}",
+                          style: TextStyle(color: Colors.white)),
+                      onTap: () => {
+                        ContactController.instance
+                            .addContact(snapshot.data[index]),
+                        Navigator.pushNamed(context, '/third')
+                      },
+                    );
+                  },
+                ),
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }

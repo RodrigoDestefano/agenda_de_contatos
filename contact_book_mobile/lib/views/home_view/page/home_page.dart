@@ -1,6 +1,7 @@
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/views/home_view/widgets/contacts_tab.dart';
 import 'package:contact_book_mobile/views/home_view/widgets/custom_fab.dart';
+import 'package:contact_book_mobile/views/home_view/widgets/groups_tab.dart';
 import 'package:flutter/material.dart';
 
 // This file contains the entire page and call your widgets
@@ -28,14 +29,14 @@ class _HomePageState extends State<HomePage> {
               bottom: TabBar(
                 indicatorColor: Color(0xff04559d),
                 tabs: [
-                  Tab(icon: Icon(Icons.directions_car)),
-                  Tab(icon: Icon(Icons.directions_transit))
+                  Tab(icon: Icon(Icons.person)),
+                  Tab(icon: Icon(Icons.group))
                 ],
               ),
             ),
           ),
           body: TabBarView(
-            children: [ContactsTab(), Icon(Icons.directions_transit)],
+            children: [ContactsTab(), GroupsTab()],
           ),
           floatingActionButton: CustomFab(),
         ),

@@ -152,7 +152,6 @@ class _AddContactWidgetState extends State<AddContactWidget> {
 
                             var resp = await ApiCorreiosServices()
                                 .getAddressByZipCode(zipCodeController.text);
-                            print(resp);
 
                             if (resp != null) {
                               setState(() {
@@ -223,14 +222,12 @@ class _AddContactWidgetState extends State<AddContactWidget> {
             child: ElevatedButton(
               onPressed: () async {
                 final isValid = formKey.currentState!.validate();
-                // FocusScope.of(context).unfocus();
 
                 if (isValid) {
                   formKey.currentState!.save();
 
                   String body =
                       '{"name":"$name", "phone":"$phone", "email":"$email", "zip_code":"$zipCode", "street":"$street", "number":"$number", "district":"$district", "city":"$city"}';
-                  print(body);
 
                   var resp;
                   int userId = UserController.instance.user.id;
