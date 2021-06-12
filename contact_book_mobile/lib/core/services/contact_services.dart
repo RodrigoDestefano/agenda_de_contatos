@@ -36,32 +36,25 @@ class ContactServices {
   }
 
   //################################ POST ################################
-  Future<void> createContact(
-    int? userId,
-    String token,
-  ) async {
-    List<Contact> contacts = [];
-
+  Future<dynamic> createContact(int userId, String token, String body) async {
     var url = Uri.parse(('$path/users/$userId/contacts'));
     print(url);
 
-    String body = '{}';
-
     var response = await http.post(url,
-        headers: {"authorization": "Bearer $token"}, body: body);
+        headers: {
+          "authorization": "Bearer $token",
+          "Content-Type": "application/json"
+        },
+        body: body);
 
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
 
     if (response.statusCode == 200) {
-      var decode = json.decode(utf8.decode(response.bodyBytes))['contact']
-          as List<dynamic>;
-
-      for (var contact in decode) {
-        contacts.add(Contact.fromJson(contact));
-      }
+      return jsonResponse;
     } else {
       print('Error ${response.statusCode}: ${jsonResponse['message']}');
     }
+    return jsonResponse;
   }
 }

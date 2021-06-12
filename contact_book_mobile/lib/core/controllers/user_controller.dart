@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 
 // Controller that contains the logged user
 class UserController extends ChangeNotifier {
+  static UserController instance = UserController();
+
   User user = User();
 
   void addUser(User content) {

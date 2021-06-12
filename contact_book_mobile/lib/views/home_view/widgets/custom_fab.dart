@@ -14,16 +14,16 @@ class _CustomFabState extends State<CustomFab>
   static bool toggle = true;
   late AnimationController controller;
   late Animation<double> animation;
-  Alignment add_person_alignment = Alignment(0.0, 0.0);
-  Alignment add_group_alignment = Alignment(0.0, 0.0);
+  Alignment addPersonAlignment = Alignment(0.0, 0.0);
+  Alignment addGroupAlignment = Alignment(0.0, 0.0);
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 350),
-        reverseDuration: Duration(milliseconds: 275));
+        duration: Duration(milliseconds: 250),
+        reverseDuration: Duration(milliseconds: 175));
 
     animation = CurvedAnimation(
         parent: controller, curve: Curves.easeOut, reverseCurve: Curves.easeIn);
@@ -48,7 +48,7 @@ class _CustomFabState extends State<CustomFab>
         child: Stack(
           children: [
             AnimatedAlign(
-              alignment: add_person_alignment + Alignment.bottomCenter,
+              alignment: addPersonAlignment + Alignment.bottomCenter,
               curve: toggle ? Curves.easeIn : Curves.elasticOut,
               duration: toggle
                   ? Duration(milliseconds: 275)
@@ -81,13 +81,13 @@ class _CustomFabState extends State<CustomFab>
               ),
             ),
             AnimatedAlign(
-              alignment: add_group_alignment + Alignment.bottomCenter,
+              alignment: addGroupAlignment + Alignment.bottomCenter,
               curve: toggle ? Curves.easeIn : Curves.elasticOut,
               duration: toggle
-                  ? Duration(milliseconds: 275)
-                  : Duration(milliseconds: 875),
+                  ? Duration(milliseconds: 175)
+                  : Duration(milliseconds: 775),
               child: AnimatedContainer(
-                duration: Duration(milliseconds: 375),
+                duration: Duration(milliseconds: 275),
                 curve: toggle ? Curves.easeIn : Curves.easeOut,
                 height: 40.0,
                 width: 40.0,
@@ -107,7 +107,7 @@ class _CustomFabState extends State<CustomFab>
                       size: 27.0,
                     ),
                     onPressed: () {
-                      setState(() {});
+                      Navigator.pushNamed(context, '/third');
                     },
                   ),
                 ),
@@ -118,7 +118,7 @@ class _CustomFabState extends State<CustomFab>
               child: Transform.rotate(
                 angle: animation.value * pi * (3 / 4),
                 child: AnimatedContainer(
-                    duration: Duration(milliseconds: 375),
+                    duration: Duration(milliseconds: 275),
                     curve: Curves.easeOut,
                     height: 50.0,
                     width: 50.0,
@@ -136,16 +136,16 @@ class _CustomFabState extends State<CustomFab>
                               toggle = !toggle;
                               controller.forward();
                               Future.delayed(Duration(milliseconds: 10), () {
-                                add_person_alignment = Alignment(0.0, -0.55);
+                                addPersonAlignment = Alignment(0.0, -0.55);
                               });
                               Future.delayed(Duration(milliseconds: 100), () {
-                                add_group_alignment = Alignment(0.0, -1.0);
+                                addGroupAlignment = Alignment(0.0, -1.0);
                               });
                             } else {
                               toggle = !toggle;
                               controller.reverse();
-                              add_person_alignment = Alignment(0.0, 0.0);
-                              add_group_alignment = Alignment(0.0, 0.0);
+                              addPersonAlignment = Alignment(0.0, 0.0);
+                              addGroupAlignment = Alignment(0.0, 0.0);
                             }
                           },
                           icon: Icon(

@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 
 // Controller that will contain the chosen contact to view the profile
 class ContactController extends ChangeNotifier {
-  Contact contact = Contact(createdAt: null);
+  static ContactController instance = ContactController();
+
+  Contact contact = Contact();
 
   void addContact(Contact content) {
     contact = content;

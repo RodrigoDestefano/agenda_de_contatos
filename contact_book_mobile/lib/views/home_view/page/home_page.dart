@@ -1,3 +1,4 @@
+import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/views/home_view/widgets/contacts_tab.dart';
 import 'package:contact_book_mobile/views/home_view/widgets/custom_fab.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class _HomePageState extends State<HomePage> {
             preferredSize: Size.fromHeight(80.0),
             child: AppBar(
               automaticallyImplyLeading: false,
-              title: Text("Agenda de Contatos"),
+              title: Text(
+                  "Agenda de Contatos de ${UserController.instance.user.name}"),
               backgroundColor: Color(0xff3fa1ff),
               bottom: TabBar(
                 indicatorColor: Color(0xff04559d),

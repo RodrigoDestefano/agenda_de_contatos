@@ -5,7 +5,7 @@ import 'package:contact_book_mobile/views/login_view/data/login_services.dart';
 import 'package:contact_book_mobile/views/login_view/widgets/custom_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This file contains the entire page and call your widgets
 class LoginScreen extends StatefulWidget {
@@ -90,15 +90,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // On login submit button
   Future<void> onLoginSubmit(String email, String password) async {
-    // Login service is called
-    var resp = await LoginScreenServices().login(email, password);
+    try {
+      // Login service is called
+      var resp = await LoginScreenServices().login(email, password);
 
-    User user = User.fromJson(resp['user']);
-    // The token is added to the AuthController
-    Provider.of<AuthController>(context, listen: false).addToken(resp['token']);
-    // The user is added to the UserController
-    Provider.of<UserController>(context, listen: false).addUser(user);
-    // Go to home page
-    Navigator.pushNamed(context, '/second');
+      if (resp['status']) {
+        User user = User.fromJson(resp['user']);
+        // The token is added to the AuthController
+        AuthController.instance.addToken(resp['token']);
+        // The user is added to the UserController
+        UserController.instance.addUser(user);
+        // Go to home page
+        Navigator.pushNamed(context, '/second');
+      } else {
+        Fluttertoast.showToast(
+            msg: resp['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 10.0);
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 }

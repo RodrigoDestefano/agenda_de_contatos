@@ -11,7 +11,7 @@ String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   User(
-      {this.id,
+      {this.id = 0,
       this.name,
       this.email,
       this.createdAt,
@@ -19,7 +19,7 @@ class User {
       this.contact,
       this.group});
 
-  int? id;
+  int id;
   String? name;
   String? email;
   DateTime? createdAt;
@@ -52,7 +52,7 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
+        "id": id,
         "name": name == null ? null : name,
         "email": email == null ? null : email,
         "createdAt": createdAt == null ? null : createdAt?.toIso8601String(),
