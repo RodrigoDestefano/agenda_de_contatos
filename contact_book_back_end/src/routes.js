@@ -14,7 +14,7 @@ router.post('/users', UserController.createUser);
 router.post('/users/login', UserController.login);
 
 // After this, all routes needs authentication 
-// router.use(authMiddleware);
+router.use(authMiddleware);
 
 // USERS routes services
 router.get('/users', UserController.getAllUsers);
