@@ -85,34 +85,41 @@ class _ContactsTabState extends State<ContactsTab> {
                 onRefresh: () async {
                   setState(() {});
                 },
-                child: ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: Container(
-                        width: 40.0,
-                        height: 40.0,
-                        // Catch image from https://picsum.photos/
-                        child: ClipOval(
-                          child: Image.network(
-                              'https://picsum.photos/id/${snapshot.data[index].id}/200'),
+                child: snapshot.data.length == 0
+                    ? Center(
+                        child: Text(
+                          "You don't have any contacts yet",
+                          style: TextStyle(color: Colors.white, fontSize: 22.0),
                         ),
+                      )
+                    : ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            leading: Container(
+                              width: 40.0,
+                              height: 40.0,
+                              // Catch image from https://picsum.photos/
+                              child: ClipOval(
+                                child: Image.network(
+                                    'https://picsum.photos/id/${snapshot.data[index].id}/200'),
+                              ),
+                            ),
+                            title: Text(
+                                isControllerEmpty()
+                                    ? "${snapshot.data[index].name}"
+                                    : "${snapshot.data[index].name}",
+                                style: TextStyle(color: Colors.white)),
+                            subtitle: Text("${snapshot.data[index].phone}",
+                                style: TextStyle(color: Colors.white)),
+                            onTap: () => {
+                              ContactController.instance
+                                  .addContact(snapshot.data[index]),
+                              Navigator.pushNamed(context, '/fourth')
+                            },
+                          );
+                        },
                       ),
-                      title: Text(
-                          isControllerEmpty()
-                              ? "${snapshot.data[index].name}"
-                              : "${snapshot.data[index].name}",
-                          style: TextStyle(color: Colors.white)),
-                      subtitle: Text("${snapshot.data[index].phone}",
-                          style: TextStyle(color: Colors.white)),
-                      onTap: () => {
-                        ContactController.instance
-                            .addContact(snapshot.data[index]),
-                        Navigator.pushNamed(context, '/fourth')
-                      },
-                    );
-                  },
-                ),
               );
             } else {
               return Center(child: CircularProgressIndicator());

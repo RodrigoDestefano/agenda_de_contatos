@@ -35,17 +35,18 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: 60.0,
                   child: TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty)
-                          return 'Enter with a name for the group';
-                      },
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xff282828),
-                          border: OutlineInputBorder(),
-                          labelText: 'Name'),
-                      onSaved: (value) => setState(() => name = value!),
-                      style: TextStyle(color: Colors.white)),
+                    validator: (value) {
+                      if (value!.isEmpty)
+                        return 'Enter with a name for the group';
+                    },
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        labelText: 'Name'),
+                    onSaved: (value) => setState(() => name = value!),
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

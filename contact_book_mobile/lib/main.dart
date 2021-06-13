@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ContactController()),
       ],
       child: MaterialApp(
-        title: 'Agenda de Contatos',
+        title: 'Contacts Book',
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         // All routes of the app

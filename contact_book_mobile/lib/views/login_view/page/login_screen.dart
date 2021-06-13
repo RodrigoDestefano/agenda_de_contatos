@@ -3,6 +3,7 @@ import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/core/models/user.dart';
 import 'package:contact_book_mobile/views/login_view/data/login_services.dart';
 import 'package:contact_book_mobile/views/login_view/widgets/custom_form_field.dart';
+import 'package:contact_book_mobile/views/login_view/widgets/sign_in_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -60,24 +61,31 @@ class _LoginState extends State<Login> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     width: 250.0,
-                    child: ElevatedButton.icon(
+                    child: ElevatedButton(
                       onPressed: () => onLoginSubmit(
                           emailController.text, passwordController.text),
-                      icon: Icon(Icons.access_alarm_sharp),
-                      label: Text("Sign in"),
+                      child: Text("Login"),
                     ),
                   ),
                 ),
                 Container(
                   width: 250.0,
-                  child: ElevatedButton.icon(
+                  child: ElevatedButton(
                     onPressed: () {
                       print(emailController.text);
                       print(passwordController.text);
                     },
                     style: ElevatedButton.styleFrom(primary: Colors.red),
-                    icon: Icon(Icons.access_alarm_sharp),
-                    label: Text("Sign in using Google"),
+                    child: Text("Sign in using Google"),
+                  ),
+                ),
+                Container(
+                  width: 250.0,
+                  child: ElevatedButton(
+                    onPressed: () => showDialog(
+                        context: context, builder: (context) => SignInWidget()),
+                    style: ElevatedButton.styleFrom(primary: Colors.amber),
+                    child: Text("Sign in"),
                   ),
                 ),
               ],

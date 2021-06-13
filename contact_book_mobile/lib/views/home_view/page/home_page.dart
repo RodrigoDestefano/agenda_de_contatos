@@ -23,8 +23,7 @@ class _HomeState extends State<Home> {
             preferredSize: Size.fromHeight(80.0),
             child: AppBar(
               automaticallyImplyLeading: false,
-              title: Text(
-                  "Agenda de Contatos de ${UserController.instance.user.name}"),
+              title: Text("${UserController.instance.user.name} Contacts Book"),
               backgroundColor: Color(0xff3fa1ff),
               bottom: TabBar(
                 indicatorColor: Color(0xff04559d),
