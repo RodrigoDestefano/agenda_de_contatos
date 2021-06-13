@@ -1,5 +1,4 @@
 import 'dart:convert' as convert;
-import 'dart:convert';
 import 'package:contact_book_mobile/core/models/address.dart';
 import 'package:http/http.dart' as http;
 import 'package:contact_book_mobile/core/services/config/config.dart';
@@ -21,10 +20,7 @@ class AddressServices {
         convert.jsonDecode(response.body) as Map<String, dynamic>;
 
     if (response.statusCode == 200) {
-      var decode = json.decode(utf8.decode(response.bodyBytes))['address']
-          as List<dynamic>;
-
-      for (var addr in decode) {
+      for (var addr in jsonResponse['address']) {
         address.add(Address.fromJson(addr));
       }
 

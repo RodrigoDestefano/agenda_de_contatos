@@ -1,18 +1,36 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/group_controller.dart';
-import 'package:contact_book_mobile/core/services/group_services.dart';
+import 'package:contact_book_mobile/core/controllers/user_controller.dart';
+import 'package:contact_book_mobile/core/models/contact.dart';
+import 'package:contact_book_mobile/core/models/group.dart';
+import 'package:contact_book_mobile/views/home_view/data/home_services.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+// ignore: must_be_immutable
 class GroupMembersWidget extends StatefulWidget {
-  const GroupMembersWidget({Key? key}) : super(key: key);
+  bool isAdding = false;
+  GroupMembersWidget({Key? key, required this.isAdding}) : super(key: key);
 
   @override
   _GroupMembersWidgetState createState() => _GroupMembersWidgetState();
 }
 
 class _GroupMembersWidgetState extends State<GroupMembersWidget> {
+  Group group = GroupController.instance.group;
+
+  int? userId = UserController.instance.user.id;
+  String? token = AuthController.instance.token;
+
+  late Future<List<Contact>> contactsGroup;
+  late Future<List<Contact>> membersOutGroup;
+
   @override
   Widget build(BuildContext context) {
+    membersOutGroup =
+        HomePageServices().getMembersOutGroup(userId, group.id, token);
+    contactsGroup = HomePageServices().getGroup(group.id, token);
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 0, 0, 0.1),
       body: SimpleDialog(
@@ -41,7 +59,9 @@ class _GroupMembersWidgetState extends State<GroupMembersWidget> {
                       size: 20.0,
                     )),
                 Text(
-                  "${GroupController.instance.group.name} members",
+                  widget.isAdding
+                      ? 'Add contact to ${group.name}'
+                      : "${group.name} members",
                   style: TextStyle(color: Colors.white),
                 ),
               ],
@@ -50,18 +70,18 @@ class _GroupMembersWidgetState extends State<GroupMembersWidget> {
           SingleChildScrollView(
             child: Container(
               width: 100.0,
-              height: 200.0,
+              height: 250.0,
               child: FutureBuilder(
-                future: GroupServices().getGroup(
-                    GroupController.instance.group.id,
-                    AuthController.instance.token),
+                future: widget.isAdding ? membersOutGroup : contactsGroup,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return snapshot.data.length == 0
                         ? Center(
                             child: Text(
-                              "This group has no contacts yet",
-                              style: TextStyle(fontSize: 18.0),
+                              widget.isAdding
+                                  ? "No contacts available to add"
+                                  : "This group has no contacts yet",
+                              style: TextStyle(fontSize: 17.0),
                             ),
                           )
                         : ListView.builder(
@@ -79,6 +99,15 @@ class _GroupMembersWidgetState extends State<GroupMembersWidget> {
                                 ),
                                 title: Text("${snapshot.data[index].name}"),
                                 subtitle: Text("${snapshot.data[index].phone}"),
+                                trailing: IconButton(
+                                  icon: Icon(widget.isAdding
+                                      ? Icons.add
+                                      : Icons.remove),
+                                  onPressed: () {
+                                    addOrDeleteToGroup(
+                                        snapshot.data[index].id, group.name);
+                                  },
+                                ),
                               );
                             },
                           );
@@ -92,5 +121,32 @@ class _GroupMembersWidgetState extends State<GroupMembersWidget> {
         ],
       ),
     );
+  }
+
+  Future<void> addOrDeleteToGroup(int? contactId, String? name) async {
+    try {
+      var resp;
+
+      if (widget.isAdding) {
+        resp =
+            await HomePageServices().addContactToGroup(contactId, name, token);
+      } else {
+        resp = await HomePageServices()
+            .deleteContactFromGroup(contactId, name, token);
+      }
+
+      Fluttertoast.showToast(
+          msg: resp['message'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: resp['status'] ? Colors.green : Colors.red,
+          textColor: Colors.white,
+          fontSize: 10.0);
+
+      if (resp['status']) setState(() {});
+    } catch (error) {
+      print(error);
+    }
   }
 }

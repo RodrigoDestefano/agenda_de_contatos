@@ -1,9 +1,11 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/group_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
-import 'package:contact_book_mobile/core/services/group_services.dart';
+import 'package:contact_book_mobile/core/models/user.dart';
+import 'package:contact_book_mobile/views/home_view/data/home_services.dart';
 import 'package:contact_book_mobile/views/home_view/widgets/group_members_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GroupsTab extends StatefulWidget {
   const GroupsTab({Key? key}) : super(key: key);
@@ -13,13 +15,15 @@ class GroupsTab extends StatefulWidget {
 }
 
 class _GroupsTabState extends State<GroupsTab> {
+  User user = UserController.instance.user;
+  String? token = AuthController.instance.token;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color(0xff181818),
       child: FutureBuilder(
-        future: GroupServices().getGroupsByUserId(
-            UserController.instance.user.id, AuthController.instance.token),
+        future: HomePageServices().getGroupsByUserId(user.id, token),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return RefreshIndicator(
@@ -53,8 +57,40 @@ class _GroupsTabState extends State<GroupsTab> {
                                 .addGroup(snapshot.data[index]);
                             showDialog(
                                 context: context,
-                                builder: (context) => GroupMembersWidget());
+                                builder: (context) =>
+                                    GroupMembersWidget(isAdding: false));
                           },
+                          trailing: Container(
+                            height: 50.0,
+                            width: 100.0,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            GroupMembersWidget(isAdding: true));
+                                  },
+                                  icon: Icon(
+                                    Icons.person_add_alt_1,
+                                    color: Colors.white,
+                                    size: 16.0,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () => _showDialog(
+                                      context, snapshot.data[index].id),
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 16.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
                     ),
@@ -65,5 +101,49 @@ class _GroupsTabState extends State<GroupsTab> {
         },
       ),
     );
+  }
+
+  void _showDialog(BuildContext context, int? groupId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Alert"),
+          content: new Text("Do you really want to delete this group?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                deleteGroup(groupId);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> deleteGroup(int? groupId) async {
+    try {
+      var resp = await HomePageServices().deleteGroup(groupId, token);
+
+      Fluttertoast.showToast(
+          msg: resp['message'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: resp['status'] ? Colors.green : Colors.red,
+          textColor: Colors.white,
+          fontSize: 10.0);
+
+      if (resp['status']) setState(() {});
+    } catch (error) {
+      print(error);
+    }
   }
 }

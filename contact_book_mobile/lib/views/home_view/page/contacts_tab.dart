@@ -2,7 +2,7 @@ import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/contact_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/core/models/contact.dart';
-import 'package:contact_book_mobile/core/services/contact_services.dart';
+import 'package:contact_book_mobile/views/home_view/data/home_services.dart';
 import 'package:flutter/material.dart';
 
 // This file is a specific widget from HomePage
@@ -81,7 +81,7 @@ class _ContactsTabState extends State<ContactsTab> {
       body: Container(
         color: Color(0xff181818),
         child: FutureBuilder(
-          future: ContactServices().getContactsByUserId(
+          future: HomePageServices().getContactsByUserId(
               UserController.instance.user.id, AuthController.instance.token),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {

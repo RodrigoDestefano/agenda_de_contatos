@@ -1,5 +1,4 @@
 import 'dart:convert' as convert;
-import 'dart:convert';
 import 'package:contact_book_mobile/core/models/contact.dart';
 import 'package:http/http.dart' as http;
 import 'package:contact_book_mobile/core/services/config/config.dart';
@@ -20,10 +19,7 @@ class ContactServices {
         convert.jsonDecode(response.body) as Map<String, dynamic>;
 
     if (response.statusCode == 200) {
-      var decode = json.decode(utf8.decode(response.bodyBytes))['contact']
-          as List<dynamic>;
-
-      for (var contact in decode) {
+      for (var contact in jsonResponse['contact']) {
         contacts.add(Contact.fromJson(contact));
       }
 
