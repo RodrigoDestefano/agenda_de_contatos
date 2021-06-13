@@ -43,7 +43,7 @@ class Address {
         id: json["id"] == null ? null : json["id"],
         phone: json["phone"] == null ? null : json["phone"],
         email: json["email"] == null ? null : json["email"],
-        zipCode: json["zipCode"] == null ? null : json["zip_code"],
+        zipCode: json["zip_code"] == null ? null : json["zip_code"],
         street: json["street"] == null ? null : json["street"],
         number: json["number"] == null ? null : json["number"],
         district: json["district"] == null ? null : json["district"],

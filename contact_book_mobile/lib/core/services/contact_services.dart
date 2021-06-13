@@ -57,4 +57,23 @@ class ContactServices {
     }
     return jsonResponse;
   }
+
+  //################################ DELETE ################################
+  Future<dynamic> deleteContact(int? contactId, String? token) async {
+    var url = Uri.parse(('$path/contacts/$contactId'));
+    print(url);
+
+    var response =
+        await http.delete(url, headers: {"authorization": "Bearer $token"});
+
+    var jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (response.statusCode == 200) {
+      return jsonResponse;
+    } else {
+      print('Error ${response.statusCode}: ${jsonResponse['message']}');
+    }
+    return jsonResponse;
+  }
 }

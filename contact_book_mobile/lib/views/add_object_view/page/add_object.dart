@@ -161,49 +161,55 @@ class _AddObjectViewState extends State<AddObjectView> {
                                   setState(() => zipCode = value!),
                               style: TextStyle(color: Colors.white)),
                         ),
-                        Container(
-                            width: 20.0,
-                            height: 20.0,
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.search,
-                                  color: Colors.white,
-                                  size: 20.0,
-                                ),
-                                onPressed: () async {
-                                  print(zipCodeController.text);
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Container(
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff313131),
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: IconButton(
+                                  padding: EdgeInsets.only(right: 1.0),
+                                  icon: Icon(
+                                    Icons.search,
+                                    color: Colors.white,
+                                    size: 20.0,
+                                  ),
+                                  onPressed: () async {
+                                    var resp = await ApiCorreiosServices()
+                                        .getAddressByZipCode(
+                                            zipCodeController.text);
 
-                                  var resp = await ApiCorreiosServices()
-                                      .getAddressByZipCode(
-                                          zipCodeController.text);
+                                    if (resp != null) {
+                                      setState(() {
+                                        streetInitialValue.text =
+                                            resp["logradouro"];
+                                        districtInitialValue.text =
+                                            resp["bairro"];
+                                        cityInitialValue.text =
+                                            resp["localidade"];
+                                        ufInitialValue.text = resp["uf"];
 
-                                  if (resp != null) {
-                                    setState(() {
-                                      streetInitialValue.text =
-                                          resp["logradouro"];
-                                      districtInitialValue.text =
-                                          resp["bairro"];
-                                      cityInitialValue.text =
-                                          resp["localidade"];
-                                      ufInitialValue.text = resp["uf"];
-
-                                      isStreetEnable =
-                                          streetInitialValue.text == ""
-                                              ? true
-                                              : false;
-                                      isDistrictEnable =
-                                          districtInitialValue.text == ""
-                                              ? true
-                                              : false;
-                                      isCityEnable = cityInitialValue.text == ""
-                                          ? true
-                                          : false;
-                                      isUfEnable = ufInitialValue.text == ""
-                                          ? true
-                                          : false;
-                                    });
-                                  }
-                                }))
+                                        isStreetEnable =
+                                            streetInitialValue.text == ""
+                                                ? true
+                                                : false;
+                                        isDistrictEnable =
+                                            districtInitialValue.text == ""
+                                                ? true
+                                                : false;
+                                        isCityEnable =
+                                            cityInitialValue.text == ""
+                                                ? true
+                                                : false;
+                                        isUfEnable = ufInitialValue.text == ""
+                                            ? true
+                                            : false;
+                                      });
+                                    }
+                                  })),
+                        )
                       ],
                     )),
                 Container(

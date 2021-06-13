@@ -145,13 +145,10 @@ class _ContactsTabState extends State<ContactsTab> {
 
   void onSearchTextChanged(String text) async {
     setState(() {
-      print(searchInputController.text);
-
       var iterable = contacts.where((element) =>
           (element.name.toLowerCase().contains(searchInputController.text)));
 
       foudContacts = iterable.toList();
-      print(foudContacts);
     });
   }
 

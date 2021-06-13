@@ -48,14 +48,11 @@ class GroupServices {
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
 
-    print(jsonResponse);
-
     if (response.statusCode == 200) {
       var decode = json.decode(utf8.decode(response.bodyBytes))['contacts']
           as List<dynamic>;
 
       for (var contact in decode) {
-        print(contact);
         contacts.add(Contact.fromJson(contact));
       }
 

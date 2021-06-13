@@ -9,7 +9,6 @@ class ContactController extends ChangeNotifier {
 
   void addContact(Contact content) {
     contact = content;
-    print(contact.toJson());
     notifyListeners();
   }
 }
