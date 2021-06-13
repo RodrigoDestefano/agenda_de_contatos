@@ -1,6 +1,8 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
+import 'package:contact_book_mobile/core/controllers/group_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/core/services/group_services.dart';
+import 'package:contact_book_mobile/views/home_view/widgets/group_members_widget.dart';
 import 'package:flutter/material.dart';
 
 class GroupsTab extends StatefulWidget {
@@ -46,7 +48,13 @@ class _GroupsTabState extends State<GroupsTab> {
                           ),
                           title: Text("${snapshot.data[index].name}",
                               style: TextStyle(color: Colors.white)),
-                          onTap: () => {},
+                          onTap: () {
+                            GroupController.instance
+                                .addGroup(snapshot.data[index]);
+                            showDialog(
+                                context: context,
+                                builder: (context) => GroupMembersWidget());
+                          },
                         );
                       },
                     ),

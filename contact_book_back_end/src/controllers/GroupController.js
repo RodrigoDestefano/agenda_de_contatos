@@ -18,7 +18,7 @@ module.exports = {
           message: 'Group not found!'
         });
           
-      return res.status(200).send(group.contacts);
+      return res.status(200).send(group);
 
     } catch (e) {
       return res.status(400).json({

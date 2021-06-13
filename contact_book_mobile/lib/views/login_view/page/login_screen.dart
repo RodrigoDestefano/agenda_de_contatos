@@ -24,73 +24,52 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Material(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height / 3.0,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.red, Colors.red]),
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(170))),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: FlutterLogo(size: 150),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FlutterLogo(size: 150),
+          ),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomFormField(
+                  controller: emailController, isPassword: false)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomFormField(
+                controller: passwordController, isPassword: true),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 200.0,
+              child: ElevatedButton(
+                onPressed: () => onLoginSubmit(
+                    emailController.text, passwordController.text),
+                child: Text("Login"),
               ),
             ),
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CustomFormField(
-                        controller: emailController, isPassword: false)),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomFormField(
-                      controller: passwordController, isPassword: true),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: 250.0,
-                    child: ElevatedButton(
-                      onPressed: () => onLoginSubmit(
-                          emailController.text, passwordController.text),
-                      child: Text("Login"),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 250.0,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print(emailController.text);
-                      print(passwordController.text);
-                    },
-                    style: ElevatedButton.styleFrom(primary: Colors.red),
-                    child: Text("Sign in using Google"),
-                  ),
-                ),
-                Container(
-                  width: 250.0,
-                  child: ElevatedButton(
-                    onPressed: () => showDialog(
-                        context: context, builder: (context) => SignInWidget()),
-                    style: ElevatedButton.styleFrom(primary: Colors.amber),
-                    child: Text("Sign in"),
-                  ),
-                ),
-              ],
+          Container(
+            width: 200.0,
+            child: ElevatedButton(
+              onPressed: () {
+                print(emailController.text);
+                print(passwordController.text);
+              },
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+              child: Text("Sign in using Google"),
             ),
-          )
+          ),
+          Container(
+            width: 200.0,
+            child: ElevatedButton(
+              onPressed: () => showDialog(
+                  context: context, builder: (context) => SignInWidget()),
+              style: ElevatedButton.styleFrom(primary: Colors.amber),
+              child: Text("Sign in"),
+            ),
+          ),
         ],
       ),
     );

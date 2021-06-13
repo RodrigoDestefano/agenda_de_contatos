@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 import 'dart:convert';
+import 'package:contact_book_mobile/core/models/contact.dart';
 import 'package:contact_book_mobile/core/models/group.dart';
 import 'package:http/http.dart' as http;
 import 'package:contact_book_mobile/core/services/config/config.dart';
@@ -33,6 +34,37 @@ class GroupServices {
     }
 
     return groups;
+  }
+
+  Future<List<Contact>> getGroup(int? groupId, String? token) async {
+    List<Contact> contacts = [];
+
+    var url = Uri.parse(('$path/groups/$groupId'));
+    print(url);
+
+    var response =
+        await http.get(url, headers: {"authorization": "Bearer $token"});
+
+    var jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(jsonResponse);
+
+    if (response.statusCode == 200) {
+      var decode = json.decode(utf8.decode(response.bodyBytes))['contacts']
+          as List<dynamic>;
+
+      for (var contact in decode) {
+        print(contact);
+        contacts.add(Contact.fromJson(contact));
+      }
+
+      return contacts;
+    } else {
+      print('Error ${response.statusCode}: ${jsonResponse['message']}');
+    }
+
+    return contacts;
   }
 
   //################################ POST ################################
