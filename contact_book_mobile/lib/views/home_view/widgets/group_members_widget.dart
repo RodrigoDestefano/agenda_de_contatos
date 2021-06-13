@@ -1,6 +1,5 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/group_controller.dart';
-import 'package:contact_book_mobile/core/models/group.dart';
 import 'package:contact_book_mobile/core/services/group_services.dart';
 import 'package:flutter/material.dart';
 

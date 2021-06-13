@@ -1,6 +1,7 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
 import 'package:contact_book_mobile/core/controllers/contact_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
+import 'package:contact_book_mobile/core/models/contact.dart';
 import 'package:contact_book_mobile/core/services/contact_services.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,9 @@ class ContactsTab extends StatefulWidget {
 
 class _ContactsTabState extends State<ContactsTab> {
   TextEditingController searchInputController = TextEditingController();
+
+  late List<Contact> contacts = [];
+  late List<Contact> foudContacts = [];
 
   @override
   void initState() {
@@ -49,7 +53,7 @@ class _ContactsTabState extends State<ContactsTab> {
                     setState(() {
                       if (!isControllerEmpty()) {
                         searchInputController.clear();
-                        // foudContacts = userContacts;
+                        foudContacts = contacts;
                       }
                     });
                   },
@@ -81,11 +85,13 @@ class _ContactsTabState extends State<ContactsTab> {
               UserController.instance.user.id, AuthController.instance.token),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+              contacts = snapshot.data;
+
               return RefreshIndicator(
                 onRefresh: () async {
                   setState(() {});
                 },
-                child: snapshot.data.length == 0
+                child: contacts.length == 0
                     ? Center(
                         child: Text(
                           "You don't have any contacts yet",
@@ -93,7 +99,9 @@ class _ContactsTabState extends State<ContactsTab> {
                         ),
                       )
                     : ListView.builder(
-                        itemCount: snapshot.data.length,
+                        itemCount: isControllerEmpty()
+                            ? contacts.length
+                            : foudContacts.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             leading: Container(
@@ -102,19 +110,24 @@ class _ContactsTabState extends State<ContactsTab> {
                               // Catch image from https://picsum.photos/
                               child: ClipOval(
                                 child: Image.network(
-                                    'https://picsum.photos/id/${snapshot.data[index].id}/200'),
+                                    'https://picsum.photos/id/${contacts[index].id}/200'),
                               ),
                             ),
                             title: Text(
                                 isControllerEmpty()
-                                    ? "${snapshot.data[index].name}"
-                                    : "${snapshot.data[index].name}",
+                                    ? "${contacts[index].name}"
+                                    : "${foudContacts[index].name}",
                                 style: TextStyle(color: Colors.white)),
-                            subtitle: Text("${snapshot.data[index].phone}",
+                            subtitle: Text(
+                                isControllerEmpty()
+                                    ? "${contacts[index].phone}"
+                                    : "${foudContacts[index].phone}",
                                 style: TextStyle(color: Colors.white)),
                             onTap: () => {
-                              ContactController.instance
-                                  .addContact(snapshot.data[index]),
+                              ContactController.instance.addContact(
+                                  isControllerEmpty()
+                                      ? contacts[index]
+                                      : foudContacts[index]),
                               Navigator.pushNamed(context, '/fourth')
                             },
                           );
@@ -134,10 +147,11 @@ class _ContactsTabState extends State<ContactsTab> {
     setState(() {
       print(searchInputController.text);
 
-      // var foudContacts = userContacts.where((element) =>
-      //     element.name.toLowerCase().contains(searchInputController.text));
+      var iterable = contacts.where((element) =>
+          (element.name.toLowerCase().contains(searchInputController.text)));
 
-      // print(foudContacts);
+      foudContacts = iterable.toList();
+      print(foudContacts);
     });
   }
 

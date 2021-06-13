@@ -20,7 +20,7 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criar um grupo'),
+        title: Text('Create a group'),
         backgroundColor: Colors.black,
       ),
       body: Container(
@@ -45,7 +45,6 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
                         border: OutlineInputBorder(),
                         labelText: 'Name'),
                     onSaved: (value) => setState(() => name = value!),
-                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 Row(

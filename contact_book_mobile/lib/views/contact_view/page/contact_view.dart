@@ -26,10 +26,11 @@ class _ContactViewState extends State<ContactView> {
         child: Column(
           children: [
             Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.20,
-                color: Color(0xff181818),
-                child: Row(children: [
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.20,
+              color: Color(0xff181818),
+              child: Row(
+                children: [
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Container(
@@ -45,38 +46,56 @@ class _ContactViewState extends State<ContactView> {
                     ),
                   ),
                   Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          height: 80.0,
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Name: ${contact.name}',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20.0),
-                                  ),
-                                ],
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: 90.0,
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Name: ${contact.name}',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16.0),
                               ),
-                            ),
-                            Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Phone: ${contact.phone}',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0),
-                                      )
-                                    ]))
-                          ])))
-                ])),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Phone: ${contact.phone}',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16.0),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Email: ${contact.email}',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16.0),
+                              )
+                            ],
+                          ),
+                        ),
+                      ]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Divider(
               color: Color(0xff313131),
               thickness: 1.0,
