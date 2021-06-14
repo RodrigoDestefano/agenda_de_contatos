@@ -1,12 +1,18 @@
 import 'dart:convert';
 
-// Function that converts a json to an Address object
+// The class that models an Address object
+// All the parameters can be accessed and the toJson() e fromJson() methods
+// allows obtaining the object by service requests
+//
+// For more models formats:
+// https://app.quicktype.io/ can be used to convert a json file to a Dart object
+
 Address addressFromJson(String str) => Address.fromJson(json.decode(str));
 
-// Function that converts an Address object to json
 String addressToJson(Address data) => json.encode(data.toJson());
 
 class Address {
+  // Address default constructor
   Address({
     this.id,
     this.phone,
@@ -22,6 +28,7 @@ class Address {
     this.contactId,
   });
 
+  // All class parameters
   int? id;
   String? phone;
   String? email;

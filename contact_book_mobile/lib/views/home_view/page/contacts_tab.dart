@@ -86,7 +86,7 @@ class _ContactsTabState extends State<ContactsTab> {
         child: widget.isGoogleLogin
             ? PeopleApiWidget()
             : FutureBuilder(
-                future: HomePageServices().getContactsByUserId(
+                future: HomePageServices().getAllContactsByUserId(
                     UserController.instance.user.id,
                     AuthController.instance.token),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -156,7 +156,7 @@ class _ContactsTabState extends State<ContactsTab> {
   void onSearchTextChanged(String text) async {
     setState(() {
       var iterable = contacts.where((element) =>
-          (element.name.toLowerCase().contains(searchInputController.text)));
+          (element.name!.toLowerCase().contains(searchInputController.text)));
 
       foudContacts = iterable.toList();
     });

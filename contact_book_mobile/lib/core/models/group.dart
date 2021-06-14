@@ -2,13 +2,19 @@ import 'dart:convert';
 
 import 'package:contact_book_mobile/core/models/contact.dart';
 
-// Function that converts a json to a Group object
+// The class that models a Group object
+// All the parameters can be accessed and the toJson() e fromJson() methods
+// allows obtaining the object by service requests
+//
+// For more models formats:
+// https://app.quicktype.io/ can be used to convert a json file to a Dart object
+
 Group groupFromJson(String str) => Group.fromJson(json.decode(str));
 
-// Function that converts a Group object to json
 String groupToJson(Group data) => json.encode(data.toJson());
 
 class Group {
+  // Group default constructor
   Group({
     this.id,
     this.name,
@@ -18,6 +24,7 @@ class Group {
     this.contact,
   });
 
+  // All class parameters
   int? id;
   String? name;
   DateTime? updatedAt;

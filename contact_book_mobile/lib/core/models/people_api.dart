@@ -1,15 +1,22 @@
-// To parse this JSON data, do
-//
-// final googleContacts = googleContactsFromJson(jsonString);
-
 import 'dart:convert';
+
+// This class models the Google contacts object used in a Google account login
+// All the parameters can be accessed and the toJson() e fromJson() methods
+// allows obtaining the object by service requests
+
+// The model contains the request body from:
+// https://people.googleapis.com/v1/people/me/connections?personFields=names,phoneNumbers
+
+// For others specific models and requests you can access:
+// https://developers.google.com/people/api/rest
+
+// And their authorizations in:
+// https://developers.google.com/people/api/rest/v1/people/get#authorization-scopes
 
 GoogleContacts googleContactsFromJson(String str) =>
     GoogleContacts.fromJson(json.decode(str));
 
 String googleContactsToJson(GoogleContacts data) => json.encode(data.toJson());
-
-GoogleContacts? global;
 
 class GoogleContacts {
   GoogleContacts({

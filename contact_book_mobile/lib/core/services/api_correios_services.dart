@@ -1,6 +1,8 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
+// This class contains a unique service from https://viacep.com.br/
+// It's a free, high-performance webservice to query Brazil Postal Address Codes (ZIP Code)
 class ApiCorreiosServices {
   Future<dynamic> getAddressByZipCode(String zipCode) async {
     try {

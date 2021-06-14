@@ -3,15 +3,21 @@ import 'dart:convert';
 import 'package:contact_book_mobile/core/models/contact.dart';
 import 'package:contact_book_mobile/core/models/group.dart';
 
-// Function that converts a json to an User object
+// The class that models a User object
+// All the parameters can be accessed and the toJson() e fromJson() methods
+// allows obtaining the object by service requests
+//
+// For more models formats:
+// https://app.quicktype.io/ can be used to convert a json file to a Dart object
+
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
-// Function that converts an User object to json
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
+  // User default constructor
   User(
-      {this.id = 0,
+      {this.id,
       this.name,
       this.email,
       this.createdAt,
@@ -19,7 +25,8 @@ class User {
       this.contact,
       this.group});
 
-  int id;
+  // All class parameters
+  int? id;
   String? name;
   String? email;
   DateTime? createdAt;
@@ -52,7 +59,7 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id == null ? null : id,
         "name": name == null ? null : name,
         "email": email == null ? null : email,
         "createdAt": createdAt == null ? null : createdAt?.toIso8601String(),

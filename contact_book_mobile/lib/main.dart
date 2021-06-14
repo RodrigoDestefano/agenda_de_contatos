@@ -15,6 +15,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // A provider is a wrapper around InheritedWidget to make them easier to use and more reusable
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthController()),
@@ -22,13 +23,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ContactController()),
       ],
       child: MaterialApp(
-        title: 'Contacts Book',
+        title: 'Contact Book',
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
-        // All routes of the app
+        // All routes to app main pages
         routes: {
           '/': (context) => Login(),
+          // These routes depend on specific parameters for calls
+          // '/second': Home
           Home.routeName: (context) => Home(),
+          // '/third': AddObjectView
           AddObjectView.routeName: (context) => AddObjectView(),
           '/fourth': (context) => ContactView(),
         },

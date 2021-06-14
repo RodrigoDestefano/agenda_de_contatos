@@ -14,8 +14,8 @@ class LoginServices {
     return await UserServices().createUser(name, email, password);
   }
 
-  Future<GoogleContacts?> getUserContacts(
+  Future<GoogleContacts?> getGoogleContacts(
       GoogleSignInAccount? currentUser) async {
-    return await PeopleApiServices().getUserContacts(currentUser!);
+    return await PeopleApiServices().getGoogleContacts(currentUser!);
   }
 }

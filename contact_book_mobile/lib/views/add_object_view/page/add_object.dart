@@ -289,7 +289,7 @@ class _AddObjectViewState extends State<AddObjectView> {
                             '{"name":"$name", "phone":"$phone", "email":"$email", "zip_code":"$zipCode", "street":"$street", "number":"$number", "district":"$district", "city":"$city", "uf":"$uf"}';
 
                         var resp;
-                        int userId = UserController.instance.user.id;
+                        int? userId = UserController.instance.user.id;
                         String token = AuthController.instance.token;
 
                         try {

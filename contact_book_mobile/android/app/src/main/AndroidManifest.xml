@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.contact_book_mobile">
    <application
-        android:label="contact_book_mobile"
+        android:label="Contact Book"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

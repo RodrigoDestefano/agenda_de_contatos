@@ -23,7 +23,7 @@ class _GroupsTabState extends State<GroupsTab> {
     return Container(
       color: Color(0xff181818),
       child: FutureBuilder(
-        future: HomePageServices().getGroupsByUserId(user.id, token),
+        future: HomePageServices().getAllGroupsByUserId(user.id, token),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return RefreshIndicator(

@@ -50,7 +50,7 @@ class _LoginState extends State<Login> {
       });
 
       if (user != null) {
-        contacts = await LoginServices().getUserContacts(_currentUser);
+        contacts = await LoginServices().getGoogleContacts(_currentUser);
       }
     });
   }

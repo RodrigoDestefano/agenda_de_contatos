@@ -1,5 +1,5 @@
 name: contact_book_mobile
-description: A new Flutter project.
+description: Your simple Contact Book app.
 
 publish_to: 'none' 
 
@@ -11,9 +11,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # A composable, Future-based library for making HTTP requests
   http: ^0.13.3
+  # A wrapper around InheritedWidget to make them easier to use and more reusable
   provider: ^5.0.0
+  # Toasts components with no Build Context
   fluttertoast: ^8.0.7
+  # A Flutter plugin for Google Sign In
   google_sign_in: ^5.0.4
 
   cupertino_icons: ^1.0.2

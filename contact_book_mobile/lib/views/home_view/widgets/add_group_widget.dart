@@ -62,7 +62,7 @@ class _AddGroupWidgetState extends State<AddGroupWidget> {
                             String body = '{"name":"$name"}';
 
                             var resp;
-                            int userId = UserController.instance.user.id;
+                            int? userId = UserController.instance.user.id;
                             String token = AuthController.instance.token;
 
                             try {

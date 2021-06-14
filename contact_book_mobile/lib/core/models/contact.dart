@@ -3,16 +3,22 @@ import 'dart:convert';
 import 'package:contact_book_mobile/core/models/address.dart';
 import 'package:contact_book_mobile/core/models/group.dart';
 
-// Function that converts a json to a Contact object
+// The class that models a Contact object
+// All the parameters can be accessed and the toJson() e fromJson() methods
+// allows obtaining the object by service requests
+//
+// For more models formats:
+// https://app.quicktype.io/ can be used to convert a json file to a Dart object
+
 Contact contactFromJson(String str) => Contact.fromJson(json.decode(str));
 
-// Function that converts a Contact object to json
 String contactToJson(Contact data) => json.encode(data.toJson());
 
 class Contact {
+  // Contact default constructor
   Contact(
       {this.id,
-      this.name = '',
+      this.name,
       this.phone,
       this.email,
       this.zipCode,
@@ -27,8 +33,9 @@ class Contact {
       this.address,
       this.group});
 
+  // All class parameters
   int? id;
-  String name;
+  String? name;
   String? phone;
   String? email;
   String? zipCode;
@@ -77,7 +84,7 @@ class Contact {
 
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
-        "name": name,
+        "name": name == null ? null : name,
         "phone": phone == null ? null : phone,
         "email": email == null ? null : email,
         "zip_code": zipCode == null ? null : zipCode,
