@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "160237726092",
+    "project_id": "contactsbook-f6380",
+    "storage_bucket": "contactsbook-f6380.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160237726092:android:1c13b1793aa3fb7fb28ea9",
+        "android_client_info": {
+          "package_name": "com.example.contact_book_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160237726092-aor7eemgj4gl7pgnhopgn1o6e86m2d6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.contact_book_mobile",
+            "certificate_hash": "21730ed980908c1aee75c5bd40cb53a09593cc16"
+          }
+        },
+        {
+          "client_id": "160237726092-6lfubk12qudq38tg7vp1igrsjh0ban31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXaaSN7m3oiRYIk94seQoo3lelfhvst2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160237726092-6lfubk12qudq38tg7vp1igrsjh0ban31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

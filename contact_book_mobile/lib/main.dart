@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         // All routes of the app
         routes: {
           '/': (context) => Login(),
-          '/second': (context) => Home(),
+          Home.routeName: (context) => Home(),
           AddObjectView.routeName: (context) => AddObjectView(),
           '/fourth': (context) => ContactView(),
         },

@@ -1,12 +1,18 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
+import 'package:contact_book_mobile/core/controllers/people_api_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
+import 'package:contact_book_mobile/core/models/helpers/google_login.dart';
+import 'package:contact_book_mobile/core/models/people_api.dart';
 import 'package:contact_book_mobile/core/models/user.dart';
+import 'package:contact_book_mobile/core/services/people_api_services.dart';
+import 'package:contact_book_mobile/views/home_view/page/home_page.dart';
 import 'package:contact_book_mobile/views/login_view/data/login_services.dart';
 import 'package:contact_book_mobile/views/login_view/widgets/custom_form_field.dart';
 import 'package:contact_book_mobile/views/login_view/widgets/sign_in_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 // This file contains the entire page and call your widgets
 class Login extends StatefulWidget {
@@ -19,6 +25,35 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  // Create your project at https://console.firebase.google.com/ to use Google APIs
+  // GoogleSignIn _googleSignIn = GoogleSignIn();
+  GoogleSignInAccount? _currentUser;
+
+  // See all possible scopes by the link
+  // https://developers.google.com/identity/protocols/oauth2/scopes
+  // /auth/contacts.readonly: "See and download your contacts"
+  GoogleSignIn? _googleSignIn;
+
+  GoogleContacts? contacts;
+
+  @override
+  void initState() {
+    super.initState();
+    _googleSignIn = GoogleSignIn(scopes: [
+      "https://www.googleapis.com/auth/contacts",
+    ]);
+
+    _googleSignIn!.onCurrentUserChanged.listen((user) async {
+      setState(() {
+        _currentUser = user!;
+      });
+
+      if (user != null) {
+        contacts = await LoginServices().getUserContacts(_currentUser);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +88,14 @@ class _LoginState extends State<Login> {
           Container(
             width: 200.0,
             child: ElevatedButton(
-              onPressed: () {
-                print(emailController.text);
-                print(passwordController.text);
+              onPressed: () async {
+                await onLoginWithGoogle();
+
+                try {
+                  await _googleSignIn!.signIn();
+                } on Exception catch (error) {
+                  print(error);
+                }
               },
               style: ElevatedButton.styleFrom(primary: Colors.red),
               child: Text("Sign in using Google"),
@@ -88,7 +128,9 @@ class _LoginState extends State<Login> {
         // The user is added to the UserController
         UserController.instance.addUser(user);
         // Go to home page
-        Navigator.pushNamed(context, '/second');
+        GoogleLogin args = GoogleLogin(isGoogleLogin: false);
+
+        Navigator.of(context).pushNamed(Home.routeName, arguments: args);
       } else {
         Fluttertoast.showToast(
             msg: resp['message'],
@@ -101,6 +143,32 @@ class _LoginState extends State<Login> {
       }
     } catch (error) {
       print(error);
+    }
+  }
+
+  Future<void> onLoginWithGoogle() async {
+    // Without authentication and permission will get an error to login
+    // https: //console.firebase.google.com/.../authentication/providers
+
+    // Issue on cancel login https://github.com/flutter/flutter/issues/44431
+
+    if (contacts != null) {
+      PeopleApiController.instance.addCurrentSignIn(_googleSignIn!);
+      PeopleApiController.instance.addCurrentUser(_currentUser!);
+      PeopleApiController.instance.addContacts(contacts!);
+
+      GoogleLogin args = GoogleLogin(isGoogleLogin: true);
+
+      Navigator.of(context).pushNamed(Home.routeName, arguments: args);
+
+      Fluttertoast.showToast(
+          msg: 'Your Google account has been successfully linked',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 10.0);
     }
   }
 }
