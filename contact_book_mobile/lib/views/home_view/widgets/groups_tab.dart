@@ -177,19 +177,35 @@ class _GroupsTabState extends State<GroupsTab> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text("Alert"),
-          content: new Text("Do you really want to delete this group?"),
+          backgroundColor: darkBlue,
+          title: DefaultText(
+            "Alert!",
+            fontColor: defaultWhite,
+            fontSize: 25.0,
+          ),
+          content: DefaultText(
+            "Do you really want to delete this group?",
+            fontColor: defaultWhite,
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('No'),
+              child: DefaultText(
+                'No',
+                fontSize: 20,
+                fontColor: defaultWhite,
+              ),
             ),
             TextButton(
               onPressed: () {
                 deleteGroup(groupId);
                 Navigator.of(context).pop();
               },
-              child: const Text('Yes'),
+              child: DefaultText(
+                'Yes',
+                fontSize: 20,
+                fontColor: defaultWhite,
+              ),
             ),
           ],
         );

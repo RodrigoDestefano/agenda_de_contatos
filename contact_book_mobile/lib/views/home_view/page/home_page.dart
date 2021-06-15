@@ -1,4 +1,5 @@
 import 'package:contact_book_mobile/shared/colors/colors.dart';
+import 'package:contact_book_mobile/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_book_mobile/core/controllers/people_api_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
@@ -88,33 +89,49 @@ class _HomeState extends State<Home> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text("Alert"),
-          content: new Text("Do you really want to loggout?"),
+          backgroundColor: darkBlue,
+          title: DefaultText(
+            "Alert!",
+            fontColor: defaultWhite,
+            fontSize: 25.0,
+          ),
+          content: DefaultText(
+            "Do you really want to loggout?",
+            fontColor: defaultWhite,
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 willPop = false;
                 Navigator.pop(context);
               },
-              child: const Text('No'),
+              child: DefaultText(
+                'No',
+                fontSize: 20,
+                fontColor: defaultWhite,
+              ),
             ),
             TextButton(
-              onPressed: () async {
-                try {
-                  // If logged with a Google account then sign out
-                  if (args.isGoogleLogin)
-                    await PeopleApiController.instance.googleSignIn!.signOut();
+                onPressed: () async {
+                  try {
+                    // If logged with a Google account then sign out
+                    if (args.isGoogleLogin)
+                      await PeopleApiController.instance.googleSignIn!
+                          .signOut();
 
-                  willPop = true;
+                    willPop = true;
 
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                } on Exception catch (error) {
-                  print(error);
-                }
-              },
-              child: const Text('Yes'),
-            ),
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  } on Exception catch (error) {
+                    print(error);
+                  }
+                },
+                child: DefaultText(
+                  'Yes',
+                  fontSize: 20,
+                  fontColor: defaultWhite,
+                )),
           ],
         );
       },

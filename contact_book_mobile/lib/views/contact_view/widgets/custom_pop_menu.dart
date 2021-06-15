@@ -1,4 +1,6 @@
 import 'package:contact_book_mobile/core/controllers/auth_controller.dart';
+import 'package:contact_book_mobile/shared/colors/colors.dart';
+import 'package:contact_book_mobile/shared/widgets/default_text.dart';
 import 'package:contact_book_mobile/views/contact_view/data/contact_view_services.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -20,8 +22,9 @@ class _CustomPopMenuState extends State<CustomPopMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<Father>(
-      color: Color(0xff313131),
-      icon: Icon(Icons.more_vert, color: Colors.white),
+      color: widget.isContact ? defaultWhite : darkBlue,
+      icon: Icon(Icons.more_vert,
+          color: widget.isContact ? defaultWhite : darkBlue),
       onSelected: (Father result) {
         if (result.index == 1) {
           widget.isContact
@@ -35,13 +38,12 @@ class _CustomPopMenuState extends State<CustomPopMenu> {
           child: ListTile(
             leading: Icon(
               Icons.edit,
-              color: Colors.white,
+              color: widget.isContact ? darkBlue : defaultWhite,
               size: 20.0,
             ),
-            title: Text(
-              'Edit',
-              style: TextStyle(color: Colors.white, fontSize: 15.0),
-            ),
+            title: DefaultText('Edit',
+                fontColor: widget.isContact ? darkBlue : defaultWhite,
+                fontSize: 15.0),
           ),
         ),
         PopupMenuItem<Father>(
@@ -49,12 +51,13 @@ class _CustomPopMenuState extends State<CustomPopMenu> {
           child: ListTile(
             leading: Icon(
               Icons.delete,
-              color: Colors.white,
+              color: widget.isContact ? darkBlue : defaultWhite,
               size: 20.0,
             ),
-            title: Text(
+            title: DefaultText(
               'Delete',
-              style: TextStyle(color: Colors.white, fontSize: 15.0),
+              fontColor: widget.isContact ? darkBlue : defaultWhite,
+              fontSize: 15.0,
             ),
           ),
         )
@@ -67,17 +70,24 @@ class _CustomPopMenuState extends State<CustomPopMenu> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text("Alert"),
-          content: new Text("Do you really want to delete this contact?"),
+          title: DefaultText(
+            "Alert!",
+            fontSize: 25.0,
+          ),
+          content: DefaultText("Do you really want to delete this contact?"),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('No'),
-            ),
+                onPressed: () => Navigator.pop(context),
+                child: DefaultText(
+                  'No',
+                  fontSize: 20,
+                )),
             TextButton(
-              onPressed: () => deleteObject(objectId),
-              child: const Text('Yes'),
-            ),
+                onPressed: () => deleteObject(objectId),
+                child: DefaultText(
+                  'Yes',
+                  fontSize: 20,
+                )),
           ],
         );
       },
@@ -102,7 +112,7 @@ class _CustomPopMenuState extends State<CustomPopMenu> {
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: resp['status'] ? Colors.green : Colors.red,
-          textColor: Colors.white,
+          textColor: defaultWhite,
           fontSize: 10.0);
 
       if (resp['status']) {

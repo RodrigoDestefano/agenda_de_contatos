@@ -1,3 +1,5 @@
+import 'package:contact_book_mobile/shared/colors/colors.dart';
+import 'package:contact_book_mobile/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -20,25 +22,23 @@ class CustomRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.35,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(iconOne, color: Colors.white, size: 13.0),
-                Text(" $textOne",
-                    style: TextStyle(color: Colors.white, fontSize: 13.0)),
+                Icon(iconOne, color: darkBlue, size: 15.0),
+                DefaultText(" $textOne", fontSize: 15.0),
               ],
             ),
           ),
           Padding(padding: EdgeInsets.only(left: 8.0)),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.30,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(iconTwo, color: Colors.white, size: 13.0),
-                Text(" $textTwo",
-                    style: TextStyle(color: Colors.white, fontSize: 13.0)),
+                Icon(iconTwo, color: darkBlue, size: 15.0),
+                DefaultText(" $textTwo", fontSize: 15.0),
               ],
             ),
           ),
