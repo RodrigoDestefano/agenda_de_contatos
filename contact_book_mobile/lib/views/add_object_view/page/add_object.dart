@@ -295,10 +295,10 @@ class _AddObjectViewState extends State<AddObjectView> {
                         try {
                           if (args.isAddingContact) {
                             resp = await AddObjectServices()
-                                .createContact(userId, token, body);
+                                .createContact(userId, body, token);
                           } else {
                             resp = await AddObjectServices()
-                                .createAddress(args.contactId, token, body);
+                                .createAddress(args.contactId, body, token);
                           }
 
                           Fluttertoast.showToast(

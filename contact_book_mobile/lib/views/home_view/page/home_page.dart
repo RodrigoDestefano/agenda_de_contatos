@@ -1,13 +1,14 @@
+import 'package:contact_book_mobile/shared/colors/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:contact_book_mobile/core/controllers/people_api_controller.dart';
 import 'package:contact_book_mobile/core/controllers/user_controller.dart';
 import 'package:contact_book_mobile/core/models/helpers/google_login.dart';
 import 'package:contact_book_mobile/core/models/user.dart';
-import 'package:contact_book_mobile/views/home_view/page/contacts_tab.dart';
+import 'package:contact_book_mobile/views/home_view/widgets/contacts_tab.dart';
 import 'package:contact_book_mobile/views/home_view/widgets/custom_fab.dart';
-import 'package:contact_book_mobile/views/home_view/page/groups_tab.dart';
-import 'package:flutter/material.dart';
+import 'package:contact_book_mobile/views/home_view/widgets/groups_tab.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-// This file contains the entire page and call your widgets
 class Home extends StatefulWidget {
   static const routeName = '/second';
 
@@ -36,17 +37,35 @@ class _HomeState extends State<Home> {
           },
           child: Scaffold(
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(80.0),
+              preferredSize: Size.fromHeight(100.0),
               child: AppBar(
-                title: Text(args.isGoogleLogin
-                    ? "Google Contacts Book"
-                    : "${user.name} Contacts Book"),
-                backgroundColor: Color(0xff3fa1ff),
+                title: Text(
+                  args.isGoogleLogin
+                      ? "Google Contact's Book"
+                      : "${user.name} Contact's Book",
+                  style: GoogleFonts.pacifico(
+                    color: defaultWhite,
+                    fontSize: 25.0,
+                  ),
+                ),
+                backgroundColor: darkBlue,
                 bottom: TabBar(
-                  indicatorColor: Color(0xff04559d),
+                  indicatorWeight: 1.0,
                   tabs: [
-                    Tab(icon: Icon(Icons.person)),
-                    Tab(icon: Icon(Icons.group))
+                    Tab(
+                      icon: Icon(
+                        Icons.person,
+                        size: 18.0,
+                        color: defaultWhite,
+                      ),
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.group,
+                        size: 18.0,
+                        color: defaultWhite,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -82,9 +101,9 @@ class _HomeState extends State<Home> {
             TextButton(
               onPressed: () async {
                 try {
-                  if (args.isGoogleLogin) {
+                  // If logged with a Google account then sign out
+                  if (args.isGoogleLogin)
                     await PeopleApiController.instance.googleSignIn!.signOut();
-                  }
 
                   willPop = true;
 

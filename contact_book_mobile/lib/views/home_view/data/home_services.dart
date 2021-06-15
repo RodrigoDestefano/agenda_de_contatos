@@ -3,7 +3,7 @@ import 'package:contact_book_mobile/core/models/group.dart';
 import 'package:contact_book_mobile/core/services/contact_services.dart';
 import 'package:contact_book_mobile/core/services/group_services.dart';
 
-// This file contains just the services call used in HomePage viewer
+// This file contains just the services calls used in Home main page and their widgets
 class HomePageServices {
   Future<List<Contact>> getAllContactsByUserId(
       int? userId, String? token) async {

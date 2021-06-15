@@ -3,7 +3,7 @@ import 'package:contact_book_mobile/core/services/people_api_services.dart';
 import 'package:contact_book_mobile/core/services/user_services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-// This file contains just the services call used in LoginScreen viewer
+// This file contains just the services calls used in LoginScreen main page and their widgets
 class LoginServices {
   Future<dynamic> login(String email, String password) async {
     return await UserServices().login(email, password);

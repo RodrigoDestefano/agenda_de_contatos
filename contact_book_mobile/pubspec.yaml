@@ -19,6 +19,10 @@ dependencies:
   fluttertoast: ^8.0.7
   # A Flutter plugin for Google Sign In
   google_sign_in: ^5.0.4
+  # The google_fonts package for Flutter
+  google_fonts: ^2.1.0
+  # Draw SVG (and some Android VectorDrawable (XML)) files on a Flutter Widget
+  flutter_svg: ^0.22.0
 
   cupertino_icons: ^1.0.2
 
@@ -30,9 +34,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/login_img.svg
+    - assets/images/google_icon.svg
+    - assets/images/any_contact_img.svg
+    - assets/images/any_group_img.svg
+    - assets/images/any_contact_in_group_img.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
