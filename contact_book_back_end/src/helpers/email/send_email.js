@@ -2,11 +2,21 @@ const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 
 function sendEmail(userEmail, name) {
+  // Adding html style to email content
   ejs.renderFile(__dirname + "/email.ejs", function(error, data) {
 
     if(error) {
       console.log(error);
     } else {
+      // Configuration for an personal email 
+      const personalTransport = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        auth: {
+          user: "rodrigo.devtests@gmail.com",
+          // pass: "your password here"
+        }
+      });
       // Configuration for tests by https://mailtrap.io/ plataform
       const transport = nodemailer.createTransport({
         host: "smtp.mailtrap.io",
@@ -18,9 +28,9 @@ function sendEmail(userEmail, name) {
       });
 
       transport.sendMail({
-        from: `Destefano <from@mail.com>`,
+        from: `Rodrigo Destefano <rodrigo.devtests@gmail.com>`,
         to: userEmail,
-        subject: `${name}! Welcome to ContactsBook!`,
+        subject: `${name}! Welcome to Contact's Book!`,
         html: data,
       });
     }

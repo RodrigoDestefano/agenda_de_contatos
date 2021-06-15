@@ -14,11 +14,11 @@ module.exports = {
 
       return res.status(200).send(address);
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting address!',
-        error: e
+        error: error
       });
     }
   },
@@ -34,11 +34,11 @@ module.exports = {
           
       return res.status(200).send(contact);
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting all address!',
-        error: e
+        error: error
       });
     }
   },
@@ -72,11 +72,11 @@ module.exports = {
         address
       });
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error creating address!',
-        error: e
+        error: error
       });
     }
   },
@@ -110,11 +110,11 @@ module.exports = {
         return res.status(400).json({status: false, message: 'Address not found!'});
       }
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error updating address!',
-        error: e
+        error: error
       });
     }
   },
@@ -138,11 +138,11 @@ module.exports = {
         return res.status(400).json({status: false, message: 'Address not found!'});
       }
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error deleting address!',
-        error: e
+        error: error
       });
     }
   }

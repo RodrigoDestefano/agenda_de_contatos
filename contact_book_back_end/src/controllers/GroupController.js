@@ -20,11 +20,11 @@ module.exports = {
           
       return res.status(200).send(group);
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting contacts!',
-        error: e
+        error: error
       });
     }
   },
@@ -43,11 +43,11 @@ module.exports = {
 
       return res.status(200).send(user);
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting all groups!',
-        error: e
+        error: error
       });
     }
   },
@@ -79,11 +79,11 @@ module.exports = {
         group
       });
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error creating group!',
-        error: e
+        error: error
       });
     }
   },
@@ -117,11 +117,11 @@ module.exports = {
         message: "Successfully added contact to group!"
       });
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error creating group!',
-        error: e
+        error: error
       });
     }
   },
@@ -156,11 +156,11 @@ module.exports = {
         message: "Contact deleted from group!"
       });
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error deleting relationship!',
-        error: e
+        error: error
       });
     }
   },
@@ -186,11 +186,11 @@ module.exports = {
         });
       }
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error deleting group!',
-        error: e
+        error: error
       });
     }
   }

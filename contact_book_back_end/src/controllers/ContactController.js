@@ -14,11 +14,11 @@ module.exports = {
 
       return res.status(200).send(contact);
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting contact!',
-        error: e
+        error: error
       });
     }
   },
@@ -37,11 +37,11 @@ module.exports = {
 
       return res.status(200).send(user);
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting all contacts!',
-        error: e
+        error: error
       });
     }
   },
@@ -81,11 +81,11 @@ module.exports = {
         contact
       });
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error creating contact!',
-        error: e
+        error: error
       });
     }
   },
@@ -119,11 +119,11 @@ module.exports = {
         return res.status(400).json({status: false, message: 'Contact not found!'});
       }
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error updating contact!',
-        error: e
+        error: error
       });
     }
   },
@@ -150,11 +150,11 @@ module.exports = {
         });
       }
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error deleting contact!',
-        error: e
+        error: error
       });
     }
   }

@@ -23,11 +23,11 @@ module.exports = {
       
       return res.status(200).send({users});
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting all users!',
-        error: e
+        error: error
       });
     }
   },
@@ -46,11 +46,11 @@ module.exports = {
 
       return res.status(200).send(user);
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error getting user!',
-        error: e
+        error: error
       });
     }
   },
@@ -91,11 +91,11 @@ module.exports = {
         token
       });
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Login error!',
-        error: e
+        error: error
       });
     }
   },
@@ -124,11 +124,11 @@ module.exports = {
         user
       });
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error creating user!',
-        error: e
+        error: error
       });
     }
   },
@@ -146,11 +146,11 @@ module.exports = {
         message: "User updated successfully!",
       });
     
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error updating user!',
-        error: e
+        error: error
       });
     }
   },
@@ -177,11 +177,11 @@ module.exports = {
         });
       }
 
-    } catch (e) {
+    } catch (error) {
       return res.status(400).json({
         status: false,  
         message: 'Error deleting user!',
-        error: e
+        error: error
       });
     }
   }
